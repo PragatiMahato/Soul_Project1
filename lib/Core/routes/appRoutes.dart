@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:soul_project/Presentations/Screens/ForgetPin/forgetPasscodeScree.dart';
 import 'package:soul_project/Presentations/Screens/Miscellaneous/notification.dart';
-import 'package:soul_project/Presentations/Screens/Miscellaneous/widget/enabileNotificationWidget.dart';
 import 'package:soul_project/Presentations/Screens/Passcode/createPasscode.dart';
 import 'package:soul_project/Presentations/Screens/SignUp/emailScreen.dart';
 import 'package:soul_project/Presentations/Screens/SignUp/verificationScreen.dart';
@@ -15,7 +14,7 @@ class AppRoutes {
   static const String verificationScreen = "/verificationScreen";
    static const String createPasscode = "/createPasscode";
    static const String forgotPasscode = "/forgotPasscode";
-      static const String notificationScreen = "/notificationScreen";
+     static const String notificationScreen = "/notificationScreen";
 
 
   static Route<dynamic> generateRoute(RouteSettings settings) {

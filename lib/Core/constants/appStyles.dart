@@ -29,9 +29,6 @@ class AppStyle {
     fontFamily: "Outfit"
   );
 
-
-
-
   static const TextStyle smallText = TextStyle(
     fontSize: 13,
     fontWeight: FontWeight.w500,
