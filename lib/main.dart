@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:soul_project/Presentations/Screens/ForgetPin/forgetPasscodeScree.dart';
+import 'package:soul_project/Presentations/Screens/Miscellaneous/facelockscreen.dart';
+import 'package:soul_project/Presentations/Screens/Miscellaneous/fingerprintScreen.dart';
 import 'package:soul_project/Presentations/Screens/Miscellaneous/notification.dart';
 import 'package:soul_project/Presentations/Screens/Passcode/createPasscode.dart';
 import 'package:soul_project/Presentations/Screens/SignUp/emailScreen.dart';
@@ -28,7 +30,9 @@ class MyApp extends StatelessWidget {
         "/verificationScreen": (_) => const VerificationScreen(),
         "/createPasscode": (_) => const CreatePasscodeScreen(),
         "/forgotPasscode": (_) => const ForgotPasscodeScreen(),
-        "/notificationScreen": (_) => const NotificationScreen()
+        "/notificationScreen": (_) => const NotificationScreen(),
+        "/faceUnlockScreen" : (_) => const FaceUnlockScreen(),
+        "/fingerprintScreen" : (_) => const FingerprintScreen(),
       },
       theme: ThemeData(
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),

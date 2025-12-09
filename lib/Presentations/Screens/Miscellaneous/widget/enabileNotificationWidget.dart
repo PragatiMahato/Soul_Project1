@@ -66,26 +66,26 @@ class EnableFeatureScreen extends StatelessWidget {
               const Spacer(),
 
   
-              // SizedBox(
-              //   width: double.infinity,
-              //   child: ElevatedButton(
-              //     onPressed: onEnableTap,
-              //     style: ElevatedButton.styleFrom(
-              //       backgroundColor: Colors.black,
-              //       padding: const EdgeInsets.symmetric(vertical: 16),
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(14),
-              //       ),
-              //     ),
-              //     child: Text(
-              //       buttonText,
-              //       style: const TextStyle(
-              //         fontSize: 16,
-              //         color: Colors.white,
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: onEnableTap,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  child: Text(
+                    buttonText,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
 
               CustomButton(
                 onPressed: onMaybeLater,

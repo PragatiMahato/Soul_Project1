@@ -11,7 +11,9 @@ class NotificationScreen extends StatelessWidget {
       subtitle: "Get informed at the right time to make the most of your Learno account.",
       mainImage: "assets/images/notification.png",
       buttonText: "Enable Notification",
-      onEnableTap: () {},
+      onEnableTap: () {
+        Navigator.pushNamed(context, "/faceUnlockScreen");
+      },
       onMaybeLater: () {},
     );
   }
