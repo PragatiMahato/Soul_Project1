@@ -87,14 +87,7 @@ class EnableFeatureScreen extends StatelessWidget {
                 ),
               ),
 
-              CustomButton(
-                onPressed: onMaybeLater,
-                 text: 
-                  buttonText,
-                  
-                  
-                
-              ),
+             
 
               const SizedBox(height: 14),
 

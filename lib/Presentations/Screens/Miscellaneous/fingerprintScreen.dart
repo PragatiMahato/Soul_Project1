@@ -11,7 +11,9 @@ class FingerprintScreen extends StatelessWidget {
       subtitle: "This will ensure that the app will only be accessible by you.",
       mainImage: "assets/images/fingerprint.png",
       buttonText: "Enable Fingerprint",
-      onEnableTap: () {},
+      onEnableTap: () {
+         Navigator.pushNamed(context, "/homepage");
+      },
       onMaybeLater: () {},
     );
   }

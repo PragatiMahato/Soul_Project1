@@ -12,33 +12,150 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
         child:SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Home", style: AppStyle.heading1,),
                   Row(
                     children: [
-                      Icon(Icons.qr_code, size: 24),
+                      Icon(Icons.qr_code_outlined, size: 24,color: AppColors.bodyText,),
                       SizedBox(width: 14),
-                      Icon(Icons.notifications_none, size: 24),
+                      Icon(Icons.notifications, size: 24,color: AppColors.bodyText,),
                       SizedBox(width: 14),
-                      Icon(Icons.settings_outlined, size: 24),
+                      Icon(Icons.settings, size: 24,color: AppColors.bodyText,),
                     ],
                   )
                   
                 ],
-              )
+              ),
+              const SizedBox(height: 30,),
+
+                    Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                decoration:  BoxDecoration(
+                  gradient:  LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromARGB(255, 115, 114, 114),
+                      Color(0xFF3A3A3A),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child:  Column(
+                  children: [
+                    Container(
+                    margin: EdgeInsets.only(top: 10),
+                      height: 120,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        gradient:  LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromARGB(255, 115, 114, 114),
+                      Color(0xFF3A3A3A),
+                    ],
+                  ),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(width: 2),
+                         boxShadow: [
+      BoxShadow(
+        color: AppColors.black,
+        blurRadius: 5,
+        offset: const Offset(0, 4),
+      ),
+    ],
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.face_6,
+                          size: 85,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    const Text(
+                      "Proof of Soul",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    const Text(
+                      "This shows you're a real & unique human — while keeping you anonymous and your data private.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.greyButton,
+                        fontSize: 14,
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 141, 136, 104),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: const Text(
+                        "Verify Now",
+                        style: TextStyle(
+                          color: AppColors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 30),
+
+              const Text(
+                "Application and Services",
+                style: AppStyle.smallText,
+              ),
+
+              const SizedBox(height: 15),
+
+               Center(
+                child: Image.asset("assets/images/apps.png"),
+               ),
+               Center(
+                child: Image.asset("assets/images/apps.png"),
+               )
             ],
           ),
-        ) ),
+        ),
+      ),
     );
   }
+
+ 
+ 
+  
 }
