@@ -3,6 +3,7 @@ import 'package:soul_project/Core/routes/appRoutes.dart';
 import 'package:soul_project/Presentations/Screens/ForgetPin/forgetPasscodeScree.dart';
 import 'package:soul_project/Presentations/Screens/Home/homePage.dart';
 import 'package:soul_project/Presentations/Screens/Home/qr_code.dart';
+import 'package:soul_project/Presentations/Screens/Home/settingScreen.dart';
 import 'package:soul_project/Presentations/Screens/Miscellaneous/facelockscreen.dart';
 import 'package:soul_project/Presentations/Screens/Miscellaneous/fingerprintScreen.dart';
 import 'package:soul_project/Presentations/Screens/Miscellaneous/notification.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         "/fingerprintScreen" : (_) => const FingerprintScreen(),
         "/homepage" : (_) => const HomePage(),
         "/myQrCodeScreen" : (_) =>  MyQrCodeScreen(),
+        '/settingScreen': (context) => const SettingScreen(),
       },
       theme: ThemeData(
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),

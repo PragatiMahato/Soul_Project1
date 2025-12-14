@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:soul_project/Core/constants/appStyles.dart';
 import 'package:soul_project/Presentations/Screens/Home/weidget/actionButton.dart';
 
 class MyQrCodeScreen extends StatelessWidget {
@@ -22,11 +23,7 @@ class MyQrCodeScreen extends StatelessWidget {
                 children: [
                   const Text(
                     "My QR Code",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: AppStyle.heading3,
                   ),
                   GestureDetector(
                     onTap: () => Navigator.pop(context),

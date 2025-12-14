@@ -16,17 +16,28 @@ class AppStyle {
   );
 
   static const TextStyle heading2 = TextStyle(
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: FontWeight.w600,
-    color: AppColors.textPrimary,
-    fontFamily: "Outfit"
+    color: AppColors.white,
+    fontFamily: "Outfit",
+    letterSpacing: -1.5
   );
 
   static const TextStyle heading3 = TextStyle(
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
-    fontFamily: "Outfit"
+    fontFamily: "Outfit",
+    letterSpacing: -1,
+  );
+
+
+  static const TextStyle heading4 = TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.w400,
+    color: AppColors.textPrimary,
+    fontFamily: "Outfit",
+    letterSpacing: -1,
   );
 
   static const TextStyle smallText = TextStyle(
