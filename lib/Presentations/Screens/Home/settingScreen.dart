@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:soul_project/Core/constants/appColors.dart';
 import 'package:soul_project/Core/constants/appStyles.dart';
+import 'package:soul_project/Presentations/Screens/Home/weidget/toggleSwitch.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -96,26 +97,26 @@ class SettingScreen extends StatelessWidget {
               const SizedBox(height: 16),
               _section("Preference"),
 
-          _switchTile(
+          SettingSwitchTile(
   title: "Enable Face Unlock",
   icon: Icons.face,
 ),
 
-_switchTile(
+SettingSwitchTile(
   title: "Enable Fingerprint",
   icon: Icons.fingerprint,
 ),
 
               _tile(
-                icon: Icons.lock_outline,
+                icon: Icons.lock,
                 title: "Change Passcode",
               ),
 
               const SizedBox(height: 16),
               _section("Resources"),
 
-              _tile(icon: Icons.group_outlined, title: "User Agreement"),
-              _tile(icon: Icons.privacy_tip, title: "Privacy Policy"),
+              _tile(icon: Icons.people, title: "User Agreement"),
+              _tile(icon: Icons.description, title: "Privacy Policy"),
               _tile(
                 icon: Icons.phone_android,
                 title: "Contact Us",
@@ -195,22 +196,16 @@ _switchTile(
       leading: Icon(icon),
       title: Text(title),
       subtitle: subtitle != null ? Text(subtitle) : null,
-      trailing: const Icon(Icons.chevron_right),
+     trailing: const Icon(
+      Icons.arrow_forward_ios_rounded,
+      size: 18,
+      color: AppColors.bodyText,
+    ),
       onTap: () {},
     );
   }
 
-  static Widget _switchTile({
-  required String title,
-  required IconData icon,
-}) {
-  return SwitchListTile(
-    contentPadding: EdgeInsets.zero,
-    value: false,
-    onChanged: (v) {},
-    title: Text(title),
-    secondary: Icon(icon, color: AppColors.bodyText,), 
-  );
-}
+ 
+
 
 }
