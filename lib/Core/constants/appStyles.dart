@@ -37,7 +37,7 @@ class AppStyle {
     fontWeight: FontWeight.w400,
     color: AppColors.textPrimary,
     fontFamily: "Outfit",
-    letterSpacing: -1,
+    letterSpacing: -0.5,
   );
 
   static const TextStyle smallText = TextStyle(

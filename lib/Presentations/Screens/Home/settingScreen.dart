@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:soul_project/Core/constants/appColors.dart';
+import 'package:soul_project/Core/constants/appStyles.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -113,19 +115,19 @@ _switchTile(
               _section("Resources"),
 
               _tile(icon: Icons.group_outlined, title: "User Agreement"),
-              _tile(icon: Icons.description_outlined, title: "Privacy Policy"),
+              _tile(icon: Icons.privacy_tip, title: "Privacy Policy"),
               _tile(
-                icon: Icons.mail_outline,
+                icon: Icons.phone_android,
                 title: "Contact Us",
                 subtitle: "support@soul.app",
               ),
-              _tile(icon: Icons.favorite_border, title: "Follow Us"),
+              _tile(icon: Icons.favorite, title: "Follow Us"),
 
               const SizedBox(height: 16),
               _section("Danger Zone"),
 
               _tile(
-                icon: Icons.delete_outline,
+                icon: Icons.delete,
                 title: "Delete your Account",
               ),
               _tile(
@@ -136,17 +138,29 @@ _switchTile(
               const SizedBox(height: 32),
 
               Column(
-                children: const [
-                  Icon(Icons.blur_circular, color: Colors.grey),
-                  SizedBox(height: 6),
-                  Text(
+                children: [
+                  Container(
+  width: 56,
+  height: 56,
+  decoration: const BoxDecoration(
+    color: Color(0xFFE5E5EA),
+    shape: BoxShape.circle,
+  ),
+  child:  Padding(
+    padding: const EdgeInsets.all(8),
+    child: Image.asset('assets/images/Vector.png'),
+  ),
+),
+
+                  const SizedBox(height: 6),
+                  const Text(
                     "Soul",
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20, color: AppColors.bodyText),
                   ),
-                  SizedBox(height: 4),
-                  Text(
+                  const SizedBox(height: 4),
+                  const Text(
                     "Version 1.0.0 (200)",
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                    style: TextStyle(fontSize: 12, color: AppColors.bodyText),
                   ),
                 ],
               ),
@@ -166,11 +180,7 @@ _switchTile(
       padding: const EdgeInsets.only(bottom: 6),
       child: Text(
         title,
-        style: const TextStyle(
-          color: Colors.grey,
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-        ),
+        style: AppStyle.heading4
       ),
     );
   }
@@ -199,7 +209,7 @@ _switchTile(
     value: false,
     onChanged: (v) {},
     title: Text(title),
-    secondary: Icon(icon), // 👈 icon at start
+    secondary: Icon(icon, color: AppColors.bodyText,), 
   );
 }
 
