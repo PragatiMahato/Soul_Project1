@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:soul_project/Presentations/Screens/ForgetPin/forgetPasscodeScree.dart';
+import 'package:soul_project/Presentations/Screens/Home/homePage.dart';
+import 'package:soul_project/Presentations/Screens/Home/qr_code.dart';
 import 'package:soul_project/Presentations/Screens/Miscellaneous/facelockscreen.dart';
 import 'package:soul_project/Presentations/Screens/Miscellaneous/fingerprintScreen.dart';
 import 'package:soul_project/Presentations/Screens/Miscellaneous/notification.dart';
@@ -19,6 +21,8 @@ class AppRoutes {
   static const String notificationScreen = "/notificationScreen";
   static const String faceUnlockScreen = "/faceUnlockScreen";
   static const String fingerprintScreen = "/fingerprintScreen";
+  static const String homepage = "/homepage";
+  static const String myQrCodeScreen = "/myQrCodeScreen";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -48,6 +52,11 @@ class AppRoutes {
 
       case fingerprintScreen:
         return MaterialPageRoute(builder: (_) => const FingerprintScreen());
+      case homepage:
+        return MaterialPageRoute(builder: (_) => const HomePage());
+
+      case myQrCodeScreen:
+        return MaterialPageRoute(builder: (_) => const MyQrCodeScreen());
 
       default:
         return MaterialPageRoute(
