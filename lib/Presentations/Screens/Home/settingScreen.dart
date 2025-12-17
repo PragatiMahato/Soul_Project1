@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:soul_project/Core/constants/appColors.dart';
 import 'package:soul_project/Core/constants/appStyles.dart';
@@ -5,6 +6,10 @@ import 'package:soul_project/Presentations/Screens/Home/weidget/toggleSwitch.dar
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
+
+    signout() async{
+    await FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +122,12 @@ class SettingScreen extends StatelessWidget {
               _section("Danger Zone"),
 
               _tile(icon: Icons.delete, title: "Delete your Account"),
-              _tile(icon: Icons.logout, title: "Log Out"),
+              
+              _tile(
+  icon: Icons.logout,
+  title: "Log Out",
+  onIconPressed: (()=> signout()),
+),
 
               const SizedBox(height: 32),
 
@@ -169,21 +179,25 @@ class SettingScreen extends StatelessWidget {
   }
 
   static Widget _tile({
-    required IconData icon,
-    required String title,
-    String? subtitle,
-  }) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Icon(icon),
-      title: Text(title),
-      subtitle: subtitle != null ? Text(subtitle) : null,
-      trailing: const Icon(
-        Icons.arrow_forward_ios_rounded,
-        size: 18,
-        color: AppColors.bodyText,
-      ),
-      onTap: () {},
-    );
-  }
+  required IconData icon,
+  required String title,
+  String? subtitle,
+  VoidCallback? onIconPressed, 
+}) {
+  return ListTile(
+    contentPadding: EdgeInsets.zero,
+    leading: IconButton(
+      icon: Icon(icon),
+      onPressed: onIconPressed ?? () {}, 
+    ),
+    title: Text(title),
+    subtitle: subtitle != null ? Text(subtitle) : null,
+    trailing: const Icon(
+      Icons.arrow_forward_ios_rounded,
+      size: 18,
+      color: AppColors.bodyText,
+    ),
+    onTap: () {},
+  );
+}
 }
