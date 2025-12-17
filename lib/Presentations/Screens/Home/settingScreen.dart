@@ -32,7 +32,6 @@ class SettingScreen extends StatelessWidget {
 
               const SizedBox(height: 10),
 
-
               Center(
                 child: CircleAvatar(
                   radius: 48,
@@ -50,10 +49,7 @@ class SettingScreen extends StatelessWidget {
               const Center(
                 child: Text(
                   "john.doe@gmail.com",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 ),
               ),
 
@@ -61,8 +57,10 @@ class SettingScreen extends StatelessWidget {
 
               Center(
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(12),
@@ -72,10 +70,7 @@ class SettingScreen extends StatelessWidget {
                     children: const [
                       Icon(Icons.copy, size: 14),
                       SizedBox(width: 6),
-                      Text(
-                        "232FDSKJHFD3...",
-                        style: TextStyle(fontSize: 12),
-                      ),
+                      Text("232FDSKJHFD3...", style: TextStyle(fontSize: 12)),
                     ],
                   ),
                 ),
@@ -97,20 +92,14 @@ class SettingScreen extends StatelessWidget {
               const SizedBox(height: 16),
               _section("Preference"),
 
-          SettingSwitchTile(
-  title: "Enable Face Unlock",
-  icon: Icons.face,
-),
+              SettingSwitchTile(title: "Enable Face Unlock", icon: Icons.face),
 
-SettingSwitchTile(
-  title: "Enable Fingerprint",
-  icon: Icons.fingerprint,
-),
-
-              _tile(
-                icon: Icons.lock,
-                title: "Change Passcode",
+              SettingSwitchTile(
+                title: "Enable Fingerprint",
+                icon: Icons.fingerprint,
               ),
+
+              _tile(icon: Icons.lock, title: "Change Passcode"),
 
               const SizedBox(height: 16),
               _section("Resources"),
@@ -127,36 +116,34 @@ SettingSwitchTile(
               const SizedBox(height: 16),
               _section("Danger Zone"),
 
-              _tile(
-                icon: Icons.delete,
-                title: "Delete your Account",
-              ),
-              _tile(
-                icon: Icons.logout,
-                title: "Log Out",
-              ),
+              _tile(icon: Icons.delete, title: "Delete your Account"),
+              _tile(icon: Icons.logout, title: "Log Out"),
 
               const SizedBox(height: 32),
 
               Column(
                 children: [
                   Container(
-  width: 56,
-  height: 56,
-  decoration: const BoxDecoration(
-    color: Color(0xFFE5E5EA),
-    shape: BoxShape.circle,
-  ),
-  child:  Padding(
-    padding: const EdgeInsets.all(8),
-    child: Image.asset('assets/images/Vector.png'),
-  ),
-),
+                    width: 56,
+                    height: 56,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFE5E5EA),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Image.asset('assets/images/Vector.png'),
+                    ),
+                  ),
 
                   const SizedBox(height: 6),
                   const Text(
                     "Soul",
-                    style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20, color: AppColors.bodyText),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                      color: AppColors.bodyText,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   const Text(
@@ -174,15 +161,10 @@ SettingSwitchTile(
     );
   }
 
-
-
   static Widget _section(String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 6),
-      child: Text(
-        title,
-        style: AppStyle.heading4
-      ),
+      child: Text(title, style: AppStyle.heading4),
     );
   }
 
@@ -196,16 +178,12 @@ SettingSwitchTile(
       leading: Icon(icon),
       title: Text(title),
       subtitle: subtitle != null ? Text(subtitle) : null,
-     trailing: const Icon(
-      Icons.arrow_forward_ios_rounded,
-      size: 18,
-      color: AppColors.bodyText,
-    ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios_rounded,
+        size: 18,
+        color: AppColors.bodyText,
+      ),
       onTap: () {},
     );
   }
-
- 
-
-
 }

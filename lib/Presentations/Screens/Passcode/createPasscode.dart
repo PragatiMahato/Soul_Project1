@@ -12,7 +12,6 @@ class CreatePasscodeScreen extends StatefulWidget {
 }
 
 class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
-
   String passcode = "";
 
   void addDigit(String digit) {
@@ -34,7 +33,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
         child: Column(
@@ -44,36 +43,38 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
               padding: EdgeInsetsGeometry.all(16),
               child: GestureDetector(
                 onTap: () => Navigator.pop(context),
-                child: Icon(Icons.arrow_back, size: 18, color: AppColors.black,),
+                child: Icon(Icons.arrow_back, size: 18, color: AppColors.black),
               ),
+            ),
+            Padding(
+              padding: EdgeInsetsGeometry.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Create a Login Passcode", style: AppStyle.heading1),
+
+                  SizedBox(height: 10),
+
+                  Text(
+                    "You'll be able to log in using the following passcode.",
+                    style: AppStyle.smallText,
+                  ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsetsGeometry.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Create a Login Passcode", style: AppStyle.heading1),
+            ),
 
-                    SizedBox(height: 10,),
+            SizedBox(height: 20),
 
-                    Text("You'll be able to log in using the following passcode.", style: AppStyle.smallText,),
+            PassCodeDisplay(length: 6, filled: passcode.length),
 
+            Spacer(),
 
-                  ],
-                ),
-                ),
+            NumberPad(onDigitPress: addDigit, onDeletePress: deleteDigit),
 
-                SizedBox(height: 20,),
-
-                PassCodeDisplay(length: 6, filled: passcode.length),
-
-                Spacer(),
-
-                NumberPad(onDigitPress: addDigit, onDeletePress: deleteDigit),
-
-                SizedBox(height: 30,)
+            SizedBox(height: 30),
           ],
-        )),
+        ),
+      ),
     );
   }
 }

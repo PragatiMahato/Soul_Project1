@@ -4,17 +4,14 @@ import 'package:soul_project/Core/constants/appStyles.dart';
 import 'package:soul_project/Presentations/Widgets/customButton.dart';
 import 'package:soul_project/Presentations/widgets/customTextfield.dart';
 
-
 class ForgotPasscodeScreen extends StatefulWidget {
   const ForgotPasscodeScreen({super.key});
 
   @override
-  State<ForgotPasscodeScreen> createState() =>
-      _ForgotPasscodeScreenState();
+  State<ForgotPasscodeScreen> createState() => _ForgotPasscodeScreenState();
 }
 
-class _ForgotPasscodeScreenState
-    extends State<ForgotPasscodeScreen> {
+class _ForgotPasscodeScreenState extends State<ForgotPasscodeScreen> {
   final TextEditingController emailController = TextEditingController();
   bool isValidEmail = false;
 
@@ -22,7 +19,7 @@ class _ForgotPasscodeScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      resizeToAvoidBottomInset: true,   // Moves up on keyboard
+      resizeToAvoidBottomInset: true, // Moves up on keyboard
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -38,10 +35,7 @@ class _ForgotPasscodeScreenState
 
               const SizedBox(height: 20),
 
-              Text(
-                "What's your Email address?",
-                style: AppStyle.heading1,
-              ),
+              Text("What's your Email address?", style: AppStyle.heading1),
 
               const SizedBox(height: 6),
 
@@ -96,8 +90,7 @@ class _ForgotPasscodeScreenState
                   text: "Continue",
                   onPressed: isValidEmail
                       ? () {
-                          Navigator.pushNamed(
-                              context, "/notificationScreen");
+                          Navigator.pushNamed(context, "/notificationScreen");
                         }
                       : null,
                 ),

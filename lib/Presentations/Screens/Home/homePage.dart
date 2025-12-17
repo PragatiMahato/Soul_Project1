@@ -3,7 +3,6 @@ import 'package:soul_project/Core/constants/appColors.dart';
 import 'package:soul_project/Core/constants/appStyles.dart';
 import 'package:soul_project/Presentations/Screens/Home/settingScreen.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -36,17 +35,13 @@ class _HomePageState extends State<HomePage> {
                         ),
                         onPressed: () {
                           Navigator.pushNamed(context, "/myQrCodeScreen");
-                          
                         },
                       ),
 
                       const SizedBox(width: 14),
 
-
                       IconButton(
-                        onPressed: () {
-                          
-                        },
+                        onPressed: () {},
                         icon: const Icon(
                           Icons.notifications,
                           size: 24,
@@ -58,11 +53,12 @@ class _HomePageState extends State<HomePage> {
 
                       IconButton(
                         onPressed: () {
-                         Navigator.push(
-  context,
-  MaterialPageRoute(builder: (_) => const SettingScreen()),
-);
-
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const SettingScreen(),
+                            ),
+                          );
                         },
                         icon: const Icon(
                           Icons.settings,
@@ -207,7 +203,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 
   Widget _appIcon(String imgPath, String title) {
     return Column(

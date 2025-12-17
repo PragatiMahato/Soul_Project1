@@ -11,15 +11,13 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-   void initState() {
+  void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 4), () {
-      Navigator.pushReplacementNamed(
-        context,
-        "/onboarding");
+      Navigator.pushReplacementNamed(context, "/onboarding");
     });
   }
-  
+
   Widget build(BuildContext context) {
     return const Scaffold(
       backgroundColor: AppColors.white,
@@ -27,9 +25,10 @@ class _SplashScreenState extends State<SplashScreen> {
         child: SizedBox(
           width: 172,
           height: 172,
-          child: Image(image: AssetImage(AppImages.splashLogo),
-          fit: BoxFit.fill,),
-          
+          child: Image(
+            image: AssetImage(AppImages.splashLogo),
+            fit: BoxFit.fill,
+          ),
         ),
       ),
     );

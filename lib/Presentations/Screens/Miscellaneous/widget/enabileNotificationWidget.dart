@@ -30,7 +30,6 @@ class EnableFeatureScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               IconButton(
                 icon: const Icon(Icons.close, size: 26),
                 onPressed: () => Navigator.pop(context),
@@ -38,34 +37,25 @@ class EnableFeatureScreen extends StatelessWidget {
 
               const SizedBox(height: 10),
 
-
-              Text(
-                title,
-                style: AppStyle.heading1
-              ),
+              Text(title, style: AppStyle.heading1),
 
               const SizedBox(height: 8),
 
-
-              Text(
-                subtitle,
-                style: AppStyle.smallText
-              ),
+              Text(subtitle, style: AppStyle.smallText),
 
               const SizedBox(height: 40),
-
 
               Center(
                 child: Image.asset(
                   mainImage,
                   height: 309,
-                  width: 526,fit: BoxFit.cover,
+                  width: 526,
+                  fit: BoxFit.cover,
                 ),
               ),
 
               const Spacer(),
 
-  
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -79,26 +69,14 @@ class EnableFeatureScreen extends StatelessWidget {
                   ),
                   child: Text(
                     buttonText,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
               ),
 
-             
-
               const SizedBox(height: 14),
 
-
-              CustomButton(
-                onPressed: onMaybeLater,
-                 text: 
-                  "Maybe Later",
-                  
-                
-              ),
+              CustomButton(onPressed: onMaybeLater, text: "Maybe Later"),
 
               const SizedBox(height: 20),
             ],

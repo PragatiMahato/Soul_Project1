@@ -25,6 +25,7 @@ class AppRoutes {
   static const String homepage = "/homepage";
   static const String myQrCodeScreen = "/myQrCodeScreen";
   static const String settingScreen = "/settingScreen";
+  // static const String signupScreen = "/SignupScreen";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -62,6 +63,9 @@ class AppRoutes {
       
       case settingScreen:
         return MaterialPageRoute(builder: (_) => const SettingScreen());
+
+      // case signupScreen:
+      //   return MaterialPageRoute(builder: (_) => const SignupScreen());
 
       default:
         return MaterialPageRoute(

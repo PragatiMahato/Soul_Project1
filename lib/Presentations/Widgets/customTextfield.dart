@@ -3,16 +3,18 @@ import 'package:soul_project/Core/constants/appColors.dart';
 import 'package:soul_project/Core/constants/appStyles.dart';
 
 class CustomTextfield extends StatelessWidget {
-  const CustomTextfield({super.key,required this.hint,
+  const CustomTextfield({
+    super.key,
+    required this.hint,
     this.controller,
     this.keyboardType,
-    this.onChanged,});
+    this.onChanged,
+  });
 
   final String hint;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final Function(String)? onChanged;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +40,8 @@ class CustomTextfield extends StatelessWidget {
             borderSide: const BorderSide(color: AppColors.black, width: 1),
           ),
           filled: true,
-          fillColor: AppColors.white
+          fillColor: AppColors.white,
         ),
-      
       ),
     );
   }

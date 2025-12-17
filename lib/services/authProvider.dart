@@ -1,29 +1,59 @@
 // import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:soul_project/services/authService.dart';
-
 
 // class AuthProvider extends ChangeNotifier {
-//   User? _user;
-//   User? get user => _user;
+//   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-//   bool _loading = false;
-//   bool get loading => _loading;
+//   User? user;
+//   bool isLoading = false;
+//   String? error;
 
-//   Future<void> loginWithGoogle() async {
-//     _loading = true;
-//     notifyListeners();
-
-//     final result = await AuthService.signInWithGoogle();
-//     _user = result;
-
-//     _loading = false;
-//     notifyListeners();
+//   AuthProvider() {
+//     _auth.authStateChanges().listen((u) {
+//       user = u;
+//       notifyListeners();
+//     });
 //   }
 
+//   // 🔐 SIGN UP
+//   Future<void> signUp(String email, String password) async {
+//     try {
+//       isLoading = true;
+//       notifyListeners();
+
+//       await _auth.createUserWithEmailAndPassword(
+//         email: email,
+//         password: password,
+//       );
+//     } on FirebaseAuthException catch (e) {
+//       error = e.message;
+//     } finally {
+//       isLoading = false;
+//       notifyListeners();
+//     }
+//   }
+
+//   // 🔐 LOGIN
+//   Future<void> login(String email, String password) async {
+//     try {
+//       isLoading = true;
+//       notifyListeners();
+
+//       await _auth.signInWithEmailAndPassword(
+//         email: email,
+//         password: password,
+//       );
+//     } on FirebaseAuthException catch (e) {
+//       error = e.message;
+//     } finally {
+//       isLoading = false;
+//       notifyListeners();
+//     }
+//   }
+
+//   // 🚪 LOGOUT
 //   Future<void> logout() async {
-//     await AuthService.signOut();
-//     _user = null;
+//     await _auth.signOut();
 //     notifyListeners();
 //   }
 // }

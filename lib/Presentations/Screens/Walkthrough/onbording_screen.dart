@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:soul_project/Core/constants/appColors.dart';
 import 'package:soul_project/Core/constants/appStyles.dart';
+import 'package:soul_project/Presentations/Screens/Home/homePage.dart';
 import 'package:soul_project/Presentations/widgets/customButton.dart';
 
 class OnoardingScreen extends StatefulWidget {
@@ -13,6 +16,7 @@ class OnoardingScreen extends StatefulWidget {
 class _OnoardingScreenState extends State<OnoardingScreen> {
   late final PageController _controller;
   int currentIndex = 0;
+  bool isloading=false; 
 
   final List<Map<String, String>> onbordingData = [
     {
@@ -30,6 +34,36 @@ class _OnoardingScreenState extends State<OnoardingScreen> {
       "subtitle": "Verify who you are without ever revealing personal details.",
     },
   ];
+
+  void continuewithGoogle() async{
+   String webclientID = '930363161118-f4tc7a07cd93ega5q7sgvl6snjhfmcb3.apps.googleusercontent.com';
+  try{
+   GoogleSignIn signIn = GoogleSignIn.instance;
+   await signIn.initialize(serverClientId: webclientID);
+     GoogleSignInAccount account = await signIn.authenticate();
+    GoogleSignInAuthentication googleAuth = account.authentication;
+
+    final credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
+
+    setState(() {
+      isloading = true;
+    });
+
+    await FirebaseAuth.instance.signInWithCredential(credential);
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomePage()), (value)=> false);
+
+
+  }catch(e){
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(e.toString())
+    ));
+
+  }finally{
+    setState(() {
+      isloading = false;
+    });
+  }
+}
 
   @override
   void initState() {
@@ -113,37 +147,23 @@ class _OnoardingScreenState extends State<OnoardingScreen> {
             _buildIndicator(),
             const Spacer(),
 
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 30),
-              child: currentIndex == onbordingData.length - 1
-                  ? Column(
-                      children: [
-                        CustomButton(
-                          text: "Continue with Email",
+           Padding(
+  padding: const EdgeInsets.fromLTRB(24, 0, 24, 30),
+  child: CustomButton(
+    text: "Continue with Google",
+    onPressed: () {
+      if (currentIndex < onbordingData.length - 1) {
+        _controller.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      } else {
+        continuewithGoogle();
+      }
+    },
+  ),
+),
 
-                          onPressed: () {
-                            Navigator.pushNamed(context, "/emailScreen");
-                          },
-                        ),
-                        const SizedBox(height: 12),
-                        CustomButton(
-                          text: "Continue with Google",
-
-                          onPressed: () {},
-                        ),
-                      ],
-                    )
-                  : CustomButton(
-                      text: "Get Started",
-
-                      onPressed: () {
-                        _controller.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeOut,
-                        );
-                      },
-                    ),
-            ),
           ],
         ),
       ),

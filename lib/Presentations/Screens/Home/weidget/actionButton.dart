@@ -4,11 +4,7 @@ class ActionButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
-  const ActionButton({
-    super.key,
-    required this.text,
-    required this.onPressed,
-  });
+  const ActionButton({super.key, required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +23,7 @@ class ActionButton extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
         ),
       ),
     );

@@ -8,7 +8,8 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return EnableFeatureScreen(
       title: "Stay in the know with instant notification",
-      subtitle: "Get informed at the right time to make the most of your Learno account.",
+      subtitle:
+          "Get informed at the right time to make the most of your Learno account.",
       mainImage: "assets/images/notification.png",
       buttonText: "Enable Notification",
       onEnableTap: () {

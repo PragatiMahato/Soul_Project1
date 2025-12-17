@@ -21,10 +21,7 @@ class MyQrCodeScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "My QR Code",
-                    style: AppStyle.heading3,
-                  ),
+                  const Text("My QR Code", style: AppStyle.heading3),
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: const Icon(Icons.close, color: Colors.white),
@@ -67,35 +64,20 @@ class MyQrCodeScreen extends StatelessWidget {
               const Center(
                 child: Text(
                   "SSI Address: 2323FDSKJHFD399D324W0",
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 13,
-                  ),
+                  style: TextStyle(color: Colors.white70, fontSize: 13),
                 ),
               ),
 
               const SizedBox(height: 24),
 
-
               Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    ActionButton(
-      text: "Copy",
-      onPressed: () {
-
-      },
-    ),
-    const SizedBox(width: 12),
-    ActionButton(
-      text: "Share",
-      onPressed: () {
-
-      },
-    ),
-  ],
-),
-
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ActionButton(text: "Copy", onPressed: () {}),
+                  const SizedBox(width: 12),
+                  ActionButton(text: "Share", onPressed: () {}),
+                ],
+              ),
 
               const Spacer(),
               const SizedBox(height: 20),
@@ -105,5 +87,4 @@ class MyQrCodeScreen extends StatelessWidget {
       ),
     );
   }
-
 }

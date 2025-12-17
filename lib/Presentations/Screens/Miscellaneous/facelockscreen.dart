@@ -12,7 +12,7 @@ class FaceUnlockScreen extends StatelessWidget {
       mainImage: "assets/images/facelock.png",
       buttonText: "Enable Face Unlock",
       onEnableTap: () {
-         Navigator.pushNamed(context, "/fingerprintScreen");
+        Navigator.pushNamed(context, "/fingerprintScreen");
       },
       onMaybeLater: () {},
     );

@@ -12,7 +12,7 @@ class FingerprintScreen extends StatelessWidget {
       mainImage: "assets/images/fingerprint.png",
       buttonText: "Enable Fingerprint",
       onEnableTap: () {
-         Navigator.pushNamed(context, "/homepage");
+        Navigator.pushNamed(context, "/homepage");
       },
       onMaybeLater: () {},
     );

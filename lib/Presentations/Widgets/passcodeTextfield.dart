@@ -16,10 +16,11 @@ class PasscodeField extends StatefulWidget {
 }
 
 class _PasscodeFieldState extends State<PasscodeField> {
-  final List<TextEditingController> controllers =
-      List.generate(6, (_) => TextEditingController());
-  final List<FocusNode> focusNodes =
-      List.generate(6, (_) => FocusNode());
+  final List<TextEditingController> controllers = List.generate(
+    6,
+    (_) => TextEditingController(),
+  );
+  final List<FocusNode> focusNodes = List.generate(6, (_) => FocusNode());
 
   @override
   void initState() {
@@ -66,13 +67,8 @@ class _PasscodeFieldState extends State<PasscodeField> {
             maxLength: 1,
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w600,
-            ),
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-            ],
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
               counterText: "",
               enabledBorder: OutlineInputBorder(

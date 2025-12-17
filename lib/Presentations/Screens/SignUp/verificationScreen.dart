@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:soul_project/Presentations/Widgets/customButton.dart';
 
-
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});
 
@@ -47,10 +46,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 56,
-      textStyle: const TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-      ),
+      textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
@@ -73,14 +69,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 onTap: () => Navigator.pop(context),
                 child: const Icon(Icons.arrow_back),
               ),
-              
+
               const SizedBox(height: 20),
               const Text(
                 "Enter a Verification Code",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
               ),
 
               const SizedBox(height: 8),
@@ -96,7 +89,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   length: 6,
                   controller: pinController,
                   defaultPinTheme: defaultPinTheme,
-                  
+
                   onChanged: (value) {
                     setState(() {
                       isValidLength = value.length == 6;
@@ -134,16 +127,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           }
                         : null,
                     child: Text(
-                      seconds == 0
-                          ? "Resend Code"
-                          : "Retry in 00:$seconds",
+                      seconds == 0 ? "Resend Code" : "Retry in 00:$seconds",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: seconds == 0 ? Colors.blue : Colors.black,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
 
@@ -151,22 +142,19 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
               CustomButton(
                 text: "Continue",
-onPressed: () {
-  if (isValidLength) {
-    Navigator.pushNamed(context, "/createPasscode");
-  } 
-  
-  else{
-    null;
-  }
-  // else {
-  //   setState(() {
-  //     showError = true;
-  //   });
-  // }
-},
-),
-
+                onPressed: () {
+                  if (isValidLength) {
+                    Navigator.pushNamed(context, "/createPasscode");
+                  } else {
+                    null;
+                  }
+                  // else {
+                  //   setState(() {
+                  //     showError = true;
+                  //   });
+                  // }
+                },
+              ),
 
               const SizedBox(height: 30),
             ],
