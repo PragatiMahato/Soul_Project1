@@ -1,15 +1,36 @@
+// ignore_for_file: use_build_context_synchronously, deprecated_member_use
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:soul_project/Core/constants/appColors.dart';
 import 'package:soul_project/Core/constants/appStyles.dart';
-import 'package:soul_project/Presentations/Screens/Home/weidget/toggleSwitch.dart';
+import 'package:soul_project/Presentations/Screens/Home/weidget/connectWallet_dialog.dart';
+import 'package:soul_project/Presentations/Screens/Home/weidget/deleteaccount_dialogbox.dart';
+import 'package:soul_project/Presentations/Screens/Home/weidget/logout_dialogbar.dart';
+import 'package:soul_project/Presentations/Screens/Home/weidget/network_dialogbox.dart';
+import 'package:soul_project/Presentations/Screens/Home/weidget/privacyPolicy.dart';
+import 'package:soul_project/Presentations/Screens/Home/weidget/userAgrement.dart';
+import 'package:soul_project/Presentations/Screens/Walkthrough/onbording_screen.dart';
+import 'package:soul_project/services/authService.dart';
 
-class SettingScreen extends StatelessWidget {
-  const SettingScreen({super.key});
+class Settingscreen extends StatefulWidget {
+  const Settingscreen({super.key});
 
-    signout() async{
-    await FirebaseAuth.instance.signOut();
+  @override
+  State<Settingscreen> createState() => _SettingscreenState();
+}
+
+class _SettingscreenState extends State<Settingscreen> {
+final AuthService _authService = AuthService();
+
+ User? _currentUser; 
+
+  @override
+  void initState() {
+    super.initState();
+    _currentUser = FirebaseAuth.instance.currentUser; // get current user
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +72,9 @@ class SettingScreen extends StatelessWidget {
 
               const SizedBox(height: 12),
 
-              const Center(
+               Center(
                 child: Text(
-                  "john.doe@gmail.com",
+                  _currentUser?.email ?? "No email",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 ),
               ),
@@ -84,50 +105,174 @@ class SettingScreen extends StatelessWidget {
               const SizedBox(height: 24),
 
               _tile(
-                icon: Icons.language,
-                title: "Choose Network",
-                subtitle: "Polygon",
-              ),
-              _tile(
-                icon: Icons.account_balance_wallet_outlined,
-                title: "Connect Wallet",
-                subtitle: "Not Connected",
-              ),
+  icon: Icons.language,
+  title: "Choose Network",
+  subtitle: "Polygon",
+  onTap: () {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => const ChooseNetworkDialog(),
+    );
+  },
+),
 
-              const SizedBox(height: 16),
-              _section("Preference"),
+           _tile(
+  icon: Icons.account_balance_wallet_outlined,
+  title: "Connect Wallet",
+  subtitle: "Not Connected",
+  onTap: () {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (_) => const ConnectWalletSheet(),
+    );
+  },
+),
 
-              SettingSwitchTile(title: "Enable Face Unlock", icon: Icons.face),
+              // const SizedBox(height: 16),
+              // _section("Preference"),
 
-              SettingSwitchTile(
-                title: "Enable Fingerprint",
-                icon: Icons.fingerprint,
-              ),
+              // SettingSwitchTile(title: "Enable Face Unlock", icon: Icons.face),
 
-              _tile(icon: Icons.lock, title: "Change Passcode"),
+              // SettingSwitchTile(
+              //   title: "Enable Fingerprint",
+              //   icon: Icons.fingerprint,
+              // ),
+
+              // _tile(icon: Icons.lock, title: "Change Passcode", onTap: () {}),
 
               const SizedBox(height: 16),
               _section("Resources"),
 
-              _tile(icon: Icons.people, title: "User Agreement"),
-              _tile(icon: Icons.description, title: "Privacy Policy"),
+              _tile(
+  icon: Icons.people,
+  title: "User Agreement",
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const UserAgreementPage()),
+    );
+  },
+),
+              _tile(
+  icon: Icons.description,
+  title: "Privacy Policy",
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const PrivacyPolicyPage()),
+    );
+  },
+),
               _tile(
                 icon: Icons.phone_android,
                 title: "Contact Us",
                 subtitle: "support@soul.app",
+                onTap: () {},
               ),
-              _tile(icon: Icons.favorite, title: "Follow Us"),
+              _tile(icon: Icons.favorite, title: "Follow Us", onTap: () {}),
 
               const SizedBox(height: 16),
               _section("Danger Zone"),
+_tile(
+  icon: Icons.delete,
+  title: "Delete your Account",
+  onTap: () {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (_) => DeleteAccountDialog(
+        onConfirm: () async {
+          Navigator.pop(context); 
 
-              _tile(icon: Icons.delete, title: "Delete your Account"),
-              
-              _tile(
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+
+          try {
+            await FirebaseAuth.instance.currentUser!.delete();
+
+            Navigator.pop(context); 
+
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const OnoardingScreen(),
+              ),
+              (_) => false,
+            );
+          } on FirebaseAuthException catch (e) {
+            Navigator.pop(context);
+
+            final msg = e.code == 'requires-recent-login'
+                ? "Please sign in again to delete your account."
+                : e.message ?? "Delete failed";
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(msg)),
+            );
+          } catch (e) {
+            Navigator.pop(context);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Delete failed: $e")),
+            );
+          }
+        },
+      ),
+    );
+  },
+),
+
+
+          _tile(
   icon: Icons.logout,
   title: "Log Out",
-  onIconPressed: (()=> signout()),
+  onTap: () {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (_) => LogoutDialog(
+        onConfirm: () async {
+          Navigator.pop(context);
+
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+
+          try {
+            await _authService.signOut();
+            Navigator.pop(context); 
+
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const OnoardingScreen(),
+              ),
+              (_) => false,
+            );
+          } catch (e) {
+            Navigator.pop(context);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Sign out failed: $e")),
+            );
+          }
+        },
+      ),
+    );
+  },
 ),
+
 
               const SizedBox(height: 32),
 
@@ -178,26 +323,44 @@ class SettingScreen extends StatelessWidget {
     );
   }
 
-  static Widget _tile({
+static Widget _tile({
   required IconData icon,
   required String title,
   String? subtitle,
-  VoidCallback? onIconPressed, 
+  VoidCallback? onTap,
 }) {
-  return ListTile(
-    contentPadding: EdgeInsets.zero,
-    leading: IconButton(
-      icon: Icon(icon),
-      onPressed: onIconPressed ?? () {}, 
+  return Material(
+    color: Colors.transparent, 
+    child: InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      splashColor: AppColors.bodyText.withOpacity(0.12),
+      highlightColor: AppColors.bodyText.withOpacity(0.06),
+
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        child: ListTile(
+          contentPadding: EdgeInsets.zero,
+
+          leading: Icon(
+            icon,
+            size: 24,
+            color: AppColors.bodyText,
+          ),
+
+          title: Text(title),
+          subtitle: subtitle != null ? Text(subtitle) : null,
+
+          trailing: const Icon(
+            Icons.arrow_forward_ios_rounded,
+            size: 18,
+            color: AppColors.bodyText,
+          ),
+        ),
+      ),
     ),
-    title: Text(title),
-    subtitle: subtitle != null ? Text(subtitle) : null,
-    trailing: const Icon(
-      Icons.arrow_forward_ios_rounded,
-      size: 18,
-      color: AppColors.bodyText,
-    ),
-    onTap: () {},
   );
 }
+
+
 }

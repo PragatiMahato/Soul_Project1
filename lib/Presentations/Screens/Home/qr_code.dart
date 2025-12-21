@@ -1,10 +1,27 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:soul_project/Core/constants/appStyles.dart';
 import 'package:soul_project/Presentations/Screens/Home/weidget/actionButton.dart';
+import 'package:soul_project/services/authService.dart' show AuthService;
 
-class MyQrCodeScreen extends StatelessWidget {
+class MyQrCodeScreen extends StatefulWidget {
   const MyQrCodeScreen({super.key});
+
+  @override
+  State<MyQrCodeScreen> createState() => _MyQrCodeScreenState();
+}
+
+class _MyQrCodeScreenState extends State<MyQrCodeScreen> {
+  final AuthService _authService = AuthService();
+
+    User? _currentUser; 
+
+  @override
+  void initState() {
+    super.initState();
+    _currentUser = FirebaseAuth.instance.currentUser; // get current user
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +56,7 @@ class MyQrCodeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(24),
                   ),
                   child: QrImageView(
-                    data: "john.doe@gmail.com",
+                    data: _currentUser?.email ?? "No Email",
                     size: 220,
                     backgroundColor: Colors.white,
                   ),
@@ -48,9 +65,9 @@ class MyQrCodeScreen extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              const Center(
+               Center(
                 child: Text(
-                  "john.doe@gmail.com",
+                 _currentUser?.email ?? "No Email",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,

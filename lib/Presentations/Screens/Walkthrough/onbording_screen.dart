@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:soul_project/Core/constants/appColors.dart';
 import 'package:soul_project/Core/constants/appStyles.dart';
 import 'package:soul_project/Presentations/Screens/Home/homePage.dart';
 import 'package:soul_project/Presentations/widgets/customButton.dart';
+import 'package:soul_project/services/authService.dart';
 
 class OnoardingScreen extends StatefulWidget {
   const OnoardingScreen({super.key});
@@ -15,8 +14,9 @@ class OnoardingScreen extends StatefulWidget {
 
 class _OnoardingScreenState extends State<OnoardingScreen> {
   late final PageController _controller;
+  final AuthService _authService = AuthService();
   int currentIndex = 0;
-  bool isloading=false; 
+  bool isloading = false;
 
   final List<Map<String, String>> onbordingData = [
     {
@@ -35,37 +35,6 @@ class _OnoardingScreenState extends State<OnoardingScreen> {
     },
   ];
 
- void continuewithGoogle() async{
-   String webclientID = '930363161118-f4tc7a07cd93ega5q7sgvl6snjhfmcb3.apps.googleusercontent.com';
-  try{
-   GoogleSignIn signIn = GoogleSignIn.instance;
-   await signIn.initialize(serverClientId: webclientID);
-     GoogleSignInAccount account = await signIn.authenticate();
-    GoogleSignInAuthentication googleAuth = account.authentication;
-
-    final credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
-
-    setState(() {
-      isloading = true;
-    });
-
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomePage()), (value)=> false);
-
-
-  }catch(e){
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(e.toString())
-    ));
-
-  }finally{
-    setState(() {
-      isloading = false;
-    });
-  }
-}
-
-
   @override
   void initState() {
     _controller = PageController();
@@ -78,7 +47,7 @@ class _OnoardingScreenState extends State<OnoardingScreen> {
       children: List.generate(
         onbordingData.length,
         (index) => AnimatedContainer(
-          duration: const Duration(microseconds: 200),
+          duration: const Duration(milliseconds: 200),
           margin: const EdgeInsets.symmetric(horizontal: 4),
           height: 8,
           width: currentIndex == index ? 32 : 8,
@@ -93,15 +62,31 @@ class _OnoardingScreenState extends State<OnoardingScreen> {
     );
   }
 
+  Future<void> _handleGoogleSignIn() async {
+    setState(() => isloading = true);
+    try {
+      final user = await _authService.signInWithGoogle(context);
+      if (user != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const HomePage()),
+        );
+      }
+    } finally {
+      setState(() => isloading = false);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -109,8 +94,7 @@ class _OnoardingScreenState extends State<OnoardingScreen> {
                     onbordingData[currentIndex]["title"]!,
                     style: AppStyle.smallText,
                   ),
-
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     onbordingData[currentIndex]["subtitle"]!,
                     style: AppStyle.heading1,
@@ -118,53 +102,46 @@ class _OnoardingScreenState extends State<OnoardingScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
-
+            const SizedBox(height: 20),
             SizedBox(
               height: 332,
               child: PageView.builder(
                 controller: _controller,
                 itemCount: onbordingData.length,
-                onPageChanged: (index) {
-                  setState(() => currentIndex = index);
-                },
-                itemBuilder: (_, i) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20),
-                      decoration: BoxDecoration(
-                        color: AppColors.greyButton,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
+                onPageChanged: (index) => setState(() => currentIndex = index),
+                itemBuilder: (_, i) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    decoration: BoxDecoration(
+                      color: AppColors.greyButton,
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                  );
-                },
+                  ),
+                ),
               ),
             ),
-
-            SizedBox(height: 20),
-
+            const SizedBox(height: 20),
             _buildIndicator(),
             const Spacer(),
-
-           Padding(
-  padding: const EdgeInsets.fromLTRB(24, 0, 24, 30),
-  child: CustomButton(
-    text: "Continue with Google",
-    onPressed: () {
-      if (currentIndex < onbordingData.length - 1) {
-        _controller.nextPage(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
-      } else {
-        continuewithGoogle();
-      }
-    },
-  ),
-),
-
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 30),
+              child: isloading
+                  ? const Center(child: CircularProgressIndicator())
+                  : CustomButton(
+                      text: "Continue with Google",
+                      onPressed: () {
+                        if (currentIndex < onbordingData.length - 1) {
+                          _controller.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOut,
+                          );
+                        } else {
+                          _handleGoogleSignIn();
+                        }
+                      },
+                    ),
+            ),
           ],
         ),
       ),

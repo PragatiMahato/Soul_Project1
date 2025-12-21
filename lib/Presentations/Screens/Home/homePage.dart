@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:soul_project/Core/constants/appColors.dart';
 import 'package:soul_project/Core/constants/appStyles.dart';
 import 'package:soul_project/Presentations/Screens/Home/settingScreen.dart';
+import 'package:soul_project/Presentations/Screens/Miscellaneous/widget/enabileNotificationWidget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,6 +12,104 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showFeaturePopups();
+    });
+  }
+
+  void _showFeaturePopups() {
+    _showNotificationPopup();
+  }
+
+  void _showNotificationPopup() {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.7),
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (_, __, ___) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: EnableFeatureScreen(
+            title: "Stay in the know with instant notification",
+            subtitle:
+                "Get informed at the right time to make the most of your Learno account.",
+            mainImage: "assets/images/notification.png",
+            buttonText: "Enable Notification",
+            onEnableTap: () {
+              Navigator.pop(context);
+              _showFaceUnlockPopup();
+            },
+            onMaybeLater: () {
+              Navigator.pop(context);
+              _showFaceUnlockPopup();
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  void _showFaceUnlockPopup() {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.7),
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (_, __, ___) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: EnableFeatureScreen(
+            title: "Setup the Face Unlock for login purpose",
+            subtitle:
+                "This will ensure that the app will only be accessible by you.",
+            mainImage: "assets/images/facelock.png",
+            buttonText: "Enable Face Unlock",
+            onEnableTap: () {
+              Navigator.pop(context);
+              _showFingerprintPopup();
+            },
+            onMaybeLater: () {
+              Navigator.pop(context);
+              _showFingerprintPopup();
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  void _showFingerprintPopup() {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.7),
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (_, __, ___) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: EnableFeatureScreen(
+            title: "Setup the Fingerprint unlock",
+            subtitle:
+                "This will ensure that the app will only be accessible by you.",
+            mainImage: "assets/images/fingerprint.png",
+            buttonText: "Enable Fingerprint",
+            onEnableTap: () {
+              Navigator.pop(context);
+            },
+            onMaybeLater: () {
+              Navigator.pop(context);
+            },
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,9 +154,7 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (_) => const SettingScreen(),
-                            ),
+                            MaterialPageRoute(builder: (_) => Settingscreen()),
                           );
                         },
                         icon: const Icon(

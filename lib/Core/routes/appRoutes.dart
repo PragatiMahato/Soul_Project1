@@ -62,7 +62,7 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const MyQrCodeScreen());
       
       case settingScreen:
-        return MaterialPageRoute(builder: (_) => const SettingScreen());
+        return MaterialPageRoute(builder: (_) => const Settingscreen());
 
       // case signupScreen:
       //   return MaterialPageRoute(builder: (_) => const SignupScreen());

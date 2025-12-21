@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:soul_project/Core/routes/appRoutes.dart';
 import 'package:soul_project/Presentations/Screens/Home/homePage.dart';
 import 'package:soul_project/Presentations/Screens/Walkthrough/onbording_screen.dart';
+import 'package:soul_project/Presentations/Screens/Walkthrough/splash_screen.dart';
 import 'package:soul_project/Presentations/Screens/ForgetPin/forgetPasscodeScree.dart';
 import 'package:soul_project/Presentations/Screens/Home/qr_code.dart';
 import 'package:soul_project/Presentations/Screens/Home/settingScreen.dart';
@@ -12,7 +13,6 @@ import 'package:soul_project/Presentations/Screens/Miscellaneous/notification.da
 import 'package:soul_project/Presentations/Screens/Passcode/createPasscode.dart';
 import 'package:soul_project/Presentations/Screens/SignUp/emailScreen.dart';
 import 'package:soul_project/Presentations/Screens/SignUp/verificationScreen.dart';
-import 'package:soul_project/services/auth_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,10 +27,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
-      home: const Wrapper(),
-
-      onGenerateRoute: AppRoutes.generateRoute,
+      title: 'Soul Project',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
+      home: const SplashScreen(),
       routes: {
         "/onboarding": (_) => const OnoardingScreen(),
         "/emailScreen": (_) => const Emailscreen(),
@@ -42,12 +43,9 @@ class MyApp extends StatelessWidget {
         "/fingerprintScreen": (_) => const FingerprintScreen(),
         "/homepage": (_) => const HomePage(),
         "/myQrCodeScreen": (_) => MyQrCodeScreen(),
-        "/settingScreen": (_) => const SettingScreen(),
+        "/settingScreen": (_) => Settingscreen(),
       },
-
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      onGenerateRoute: AppRoutes.generateRoute,
     );
   }
 }
