@@ -45,5 +45,30 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<key>LSApplicationQueriesSchemes</key>
+	<key>NSUserNotificationUsageDescription</key>
+		<string>We use notifications to keep you updated.</string>
+
+	<array>
+		<string>wc</string>
+		<string>metamask</string>
+		<string>trust</string>
+		<string>cbwallet</string>
+		<string>rainbow</string>
+		<string>okx</string>
+		<string>bitkeep</string>
+		<string>mathwallet</string>
+		<string>tpoutside</string>
+		<string>safepal</string>
+		<string>coin98</string>
+		<string>exodus</string>
+		<string>zerion</string>
+		<string>ledgerlive</string>
+		<string>phantom</string>
+	</array>
+	<array>
+  	    <string>wc</string>
+	</array>
 </dict>
 </plist>

@@ -4,13 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:soul_project/Core/constants/appColors.dart';
 import 'package:soul_project/Core/constants/appStyles.dart';
-import 'package:soul_project/Presentations/Screens/Home/weidget/connectWallet_dialog.dart';
 import 'package:soul_project/Presentations/Screens/Home/weidget/deleteaccount_dialogbox.dart';
 import 'package:soul_project/Presentations/Screens/Home/weidget/logout_dialogbar.dart';
 import 'package:soul_project/Presentations/Screens/Home/weidget/network_dialogbox.dart';
 import 'package:soul_project/Presentations/Screens/Home/weidget/privacyPolicy.dart';
 import 'package:soul_project/Presentations/Screens/Home/weidget/userAgrement.dart';
 import 'package:soul_project/Presentations/Screens/Walkthrough/onbording_screen.dart';
+import 'package:soul_project/Presentations/Screens/wallet_connect/wallet_Service.dart';
+import 'package:soul_project/Presentations/Screens/wallet_connect/walletsheet.dart';
 import 'package:soul_project/services/authService.dart';
 
 class Settingscreen extends StatefulWidget {
@@ -28,10 +29,28 @@ final AuthService _authService = AuthService();
   @override
   void initState() {
     super.initState();
-    _currentUser = FirebaseAuth.instance.currentUser; // get current user
+     walletService.init();
+    _currentUser = FirebaseAuth.instance.currentUser; 
   }
   
+ final walletService = WalletConnectService();
+  String? walletAddress;
 
+  
+
+  void showWalletSheet() {
+   showModalBottomSheet(
+  context: context,
+  isScrollControlled: true,
+  backgroundColor: Colors.transparent,
+  builder: (_) => ConnectWalletSheet(
+    onSelect: (walletName) {
+      print("Selected wallet: $walletName");
+    },
+  ),
+);
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,14 +141,7 @@ final AuthService _authService = AuthService();
   icon: Icons.account_balance_wallet_outlined,
   title: "Connect Wallet",
   subtitle: "Not Connected",
-  onTap: () {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (_) => const ConnectWalletSheet(),
-    );
-  },
+  onTap: showWalletSheet
 ),
 
               // const SizedBox(height: 16),
