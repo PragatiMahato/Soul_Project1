@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:soul_project/Core/constants/appColors.dart';
 import 'package:soul_project/Core/constants/appStyles.dart';
 import 'package:soul_project/Presentations/Screens/Home/homePage.dart';
+import 'package:soul_project/Presentations/Screens/Miscellaneous/widget/enable.dart';
+import 'package:soul_project/Presentations/Screens/Miscellaneous/widget/feature_flow.dart';
+
 import 'package:soul_project/Presentations/widgets/customButton.dart';
 import 'package:soul_project/services/authService.dart';
+
+import '../Miscellaneous/widget/notification_permission.dart';
 
 class OnoardingScreen extends StatefulWidget {
   const OnoardingScreen({super.key});
@@ -61,21 +66,25 @@ class _OnoardingScreenState extends State<OnoardingScreen> {
       ),
     );
   }
+// Future<void> _handleGoogleSignIn() async {
+//   setState(() => isloading = true);
 
-  Future<void> _handleGoogleSignIn() async {
-    setState(() => isloading = true);
-    try {
-      final user = await _authService.signInWithGoogle(context);
-      if (user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const HomePage()),
-        );
-      }
-    } finally {
-      setState(() => isloading = false);
-    }
-  }
+//   try {
+//     final user = await _authService.signInWithGoogle(context);
+
+//     if (user != null) {
+//       // Run the centralized flow
+//       await runFeatureFlow(context);
+//     }
+//   } finally {
+//     setState(() => isloading = false);
+//   }
+// }
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -130,16 +139,15 @@ class _OnoardingScreenState extends State<OnoardingScreen> {
                   ? const Center(child: CircularProgressIndicator())
                   : CustomButton(
                       text: "Continue with Google",
-                      onPressed: () {
-                        if (currentIndex < onbordingData.length - 1) {
-                          _controller.nextPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeOut,
-                          );
-                        } else {
-                          _handleGoogleSignIn();
-                        }
-                      },
+                      onPressed: () async {
+    setState(() => isloading = true);
+    final user = await _authService.signInWithGoogle(context);
+    setState(() => isloading = false);
+
+    if (user != null) {
+      await runFeatureFlow(context, user.uid);
+    }}
+
                     ),
             ),
           ],

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:soul_project/Core/constants/appColors.dart';
 import 'package:soul_project/Core/constants/appStyles.dart';
 import 'package:soul_project/Presentations/Screens/Home/settingScreen.dart';
-import 'package:soul_project/Presentations/Screens/Miscellaneous/widget/enabileNotificationWidget.dart';
+import 'package:soul_project/Presentations/Screens/Miscellaneous/notification.dart';
+import 'package:soul_project/Presentations/Screens/Miscellaneous/widget/notification_permission.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,103 +13,39 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with WidgetsBindingObserver {
+
+  bool _notificationScreenOpen = false;
+
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _showFeaturePopups();
-    });
+    WidgetsBinding.instance.addObserver(this);
   }
 
-  void _showFeaturePopups() {
-    _showNotificationPopup();
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
-  void _showNotificationPopup() {
-    showGeneralDialog(
-      context: context,
-      barrierDismissible: false,
-      barrierColor: Colors.black.withOpacity(0.7),
-      transitionDuration: const Duration(milliseconds: 300),
-      pageBuilder: (_, __, ___) {
-        return Scaffold(
-          backgroundColor: Colors.transparent,
-          body: EnableFeatureScreen(
-            title: "Stay in the know with instant notification",
-            subtitle:
-                "Get informed at the right time to make the most of your Learno account.",
-            mainImage: "assets/images/notification.png",
-            buttonText: "Enable Notification",
-            onEnableTap: () {
-              Navigator.pop(context);
-              _showFaceUnlockPopup();
-            },
-            onMaybeLater: () {
-              Navigator.pop(context);
-              _showFaceUnlockPopup();
-            },
-          ),
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      final enabled = await NotificationPermissionService.isEnabled();
+
+      if (!enabled && mounted && !_notificationScreenOpen) {
+        _notificationScreenOpen = true;
+
+        await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const NotificationScreen()),
         );
-      },
-    );
-  }
 
-  void _showFaceUnlockPopup() {
-    showGeneralDialog(
-      context: context,
-      barrierDismissible: false,
-      barrierColor: Colors.black.withOpacity(0.7),
-      transitionDuration: const Duration(milliseconds: 300),
-      pageBuilder: (_, __, ___) {
-        return Scaffold(
-          backgroundColor: Colors.transparent,
-          body: EnableFeatureScreen(
-            title: "Setup the Face Unlock for login purpose",
-            subtitle:
-                "This will ensure that the app will only be accessible by you.",
-            mainImage: "assets/images/facelock.png",
-            buttonText: "Enable Face Unlock",
-            onEnableTap: () {
-              Navigator.pop(context);
-              _showFingerprintPopup();
-            },
-            onMaybeLater: () {
-              Navigator.pop(context);
-              _showFingerprintPopup();
-            },
-          ),
-        );
-      },
-    );
-  }
-
-  void _showFingerprintPopup() {
-    showGeneralDialog(
-      context: context,
-      barrierDismissible: false,
-      barrierColor: Colors.black.withOpacity(0.7),
-      transitionDuration: const Duration(milliseconds: 300),
-      pageBuilder: (_, __, ___) {
-        return Scaffold(
-          backgroundColor: Colors.transparent,
-          body: EnableFeatureScreen(
-            title: "Setup the Fingerprint unlock",
-            subtitle:
-                "This will ensure that the app will only be accessible by you.",
-            mainImage: "assets/images/fingerprint.png",
-            buttonText: "Enable Fingerprint",
-            onEnableTap: () {
-              Navigator.pop(context);
-            },
-            onMaybeLater: () {
-              Navigator.pop(context);
-            },
-          ),
-        );
-      },
-    );
+        _notificationScreenOpen = false;
+      }
+    }
   }
 
   @override
@@ -136,32 +74,30 @@ class _HomePageState extends State<HomePage> {
                           Navigator.pushNamed(context, "/myQrCodeScreen");
                         },
                       ),
-
                       const SizedBox(width: 14),
-
                       IconButton(
-                        onPressed: () {},
                         icon: const Icon(
                           Icons.notifications,
                           size: 24,
                           color: AppColors.bodyText,
                         ),
+                        onPressed: () {},
                       ),
-
                       const SizedBox(width: 14),
-
                       IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => Settingscreen()),
-                          );
-                        },
                         icon: const Icon(
                           Icons.settings,
                           size: 24,
                           color: AppColors.bodyText,
                         ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => Settingscreen(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),

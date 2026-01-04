@@ -7,7 +7,7 @@ class WalletConnectService {
 
   void init() {
     connector = WalletConnect(
-      bridge: 'https://bridge.walletconnect.org',
+      bridge: 'https://bridge.walletconnect.org', 
       clientMeta: const PeerMeta(
         name: 'My Flutter DApp',
         description: 'WalletConnect Flutter Demo',
@@ -31,7 +31,6 @@ class WalletConnectService {
         },
       );
     }
-
     return session?.accounts.first;
   }
 

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:soul_project/Presentations/Screens/Miscellaneous/widget/enabileNotificationWidget.dart';
+import 'package:soul_project/Presentations/Screens/Miscellaneous/widget/preference.dart';
+import 'widget/enabileNotificationWidget.dart';
+
 
 class FingerprintScreen extends StatelessWidget {
-  const FingerprintScreen({super.key});
+  final String userId;
+
+  const FingerprintScreen({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +15,14 @@ class FingerprintScreen extends StatelessWidget {
       subtitle: "This will ensure that the app will only be accessible by you.",
       mainImage: "assets/images/fingerprint.png",
       buttonText: "Enable Fingerprint",
-      onEnableTap: () {
-        Navigator.pushNamed(context, "/homepage");
+      onEnableTap: () async {
+        await FeaturePreference.setFingerprint(userId, true);
+        Navigator.pop(context);
       },
-      onMaybeLater: () {},
+      onMaybeLater: () async {
+        await FeaturePreference.setFingerprint(userId, false);
+        Navigator.pop(context);
+      },
     );
   }
 }

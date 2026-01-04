@@ -28,7 +28,7 @@ class AuthService {
     }
   }
 
-  // Log Out
+
   Future<void> signOut() async {
     try {
       GoogleSignIn signIn = GoogleSignIn.instance;

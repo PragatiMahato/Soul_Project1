@@ -45,6 +45,12 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSUserNotificationUsageDescription</key>
+		<string>This app needs notification permission to keep you updated.</string>
+	
+	<key>NSFaceIDUsageDescription</key>
+		<string>We use Face ID to securely log in to your account</string>
+
 
 	<key>LSApplicationQueriesSchemes</key>
 	<key>NSUserNotificationUsageDescription</key>

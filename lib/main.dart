@@ -2,13 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:soul_project/Core/routes/appRoutes.dart';
 import 'package:soul_project/Presentations/Screens/Home/homePage.dart';
+import 'package:soul_project/Presentations/Screens/Miscellaneous/widget/notification_permission.dart';
 import 'package:soul_project/Presentations/Screens/Walkthrough/onbording_screen.dart';
 import 'package:soul_project/Presentations/Screens/Walkthrough/splash_screen.dart';
 import 'package:soul_project/Presentations/Screens/ForgetPin/forgetPasscodeScree.dart';
 import 'package:soul_project/Presentations/Screens/Home/qr_code.dart';
 import 'package:soul_project/Presentations/Screens/Home/settingScreen.dart';
-import 'package:soul_project/Presentations/Screens/Miscellaneous/facelockscreen.dart';
-import 'package:soul_project/Presentations/Screens/Miscellaneous/fingerprintScreen.dart';
 import 'package:soul_project/Presentations/Screens/Miscellaneous/notification.dart';
 import 'package:soul_project/Presentations/Screens/Passcode/createPasscode.dart';
 import 'package:soul_project/Presentations/Screens/SignUp/emailScreen.dart';
@@ -20,8 +19,34 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+
+
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+void initState() {
+  super.initState();
+
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    final enabled = await NotificationPermissionService.isEnabled();
+
+    if (!mounted) return; 
+
+    if (!enabled) {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const NotificationScreen()),
+      );
+    }
+  });
+}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +63,9 @@ class MyApp extends StatelessWidget {
         "/verificationScreen": (_) => const VerificationScreen(),
         "/createPasscode": (_) => const CreatePasscodeScreen(),
         "/forgotPasscode": (_) => const ForgotPasscodeScreen(),
-        "/notificationScreen": (_) => const NotificationScreen(),
-        "/faceUnlockScreen": (_) => const FaceUnlockScreen(),
-        "/fingerprintScreen": (_) => const FingerprintScreen(),
+        // "/notificationScreen": (_) => const NotificationScreen(),
+        // "/faceUnlockScreen": (_) => const FaceUnlockScreen(),
+        // "/fingerprintScreen": (_) => const FingerprintScreen(),
         "/homepage": (_) => const HomePage(),
         "/myQrCodeScreen": (_) => MyQrCodeScreen(),
         "/settingScreen": (_) => Settingscreen(),

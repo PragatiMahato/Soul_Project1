@@ -3,8 +3,7 @@ import 'package:soul_project/Presentations/Screens/ForgetPin/forgetPasscodeScree
 import 'package:soul_project/Presentations/Screens/Home/homePage.dart';
 import 'package:soul_project/Presentations/Screens/Home/qr_code.dart';
 import 'package:soul_project/Presentations/Screens/Home/settingScreen.dart';
-import 'package:soul_project/Presentations/Screens/Miscellaneous/facelockscreen.dart';
-import 'package:soul_project/Presentations/Screens/Miscellaneous/fingerprintScreen.dart';
+
 import 'package:soul_project/Presentations/Screens/Miscellaneous/notification.dart';
 import 'package:soul_project/Presentations/Screens/Passcode/createPasscode.dart';
 import 'package:soul_project/Presentations/Screens/SignUp/emailScreen.dart';
@@ -47,14 +46,14 @@ class AppRoutes {
       case forgotPasscode:
         return MaterialPageRoute(builder: (_) => const ForgotPasscodeScreen());
 
-      case notificationScreen:
-        return MaterialPageRoute(builder: (_) => const NotificationScreen());
+      // case notificationScreen:
+      //   return MaterialPageRoute(builder: (_) => const NotificationScreen());
 
-      case faceUnlockScreen:
-        return MaterialPageRoute(builder: (_) => const FaceUnlockScreen());
+      // case faceUnlockScreen:
+      //   return MaterialPageRoute(builder: (_) => const FaceUnlockScreen());
 
-      case fingerprintScreen:
-        return MaterialPageRoute(builder: (_) => const FingerprintScreen());
+      // case fingerprintScreen:
+      //   return MaterialPageRoute(builder: (_) => const FingerprintScreen());
       case homepage:
         return MaterialPageRoute(builder: (_) => const HomePage());
 

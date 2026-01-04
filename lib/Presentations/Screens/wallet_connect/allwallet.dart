@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:soul_project/Presentations/Screens/wallet_connect/wallet_data.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:soul_project/Presentations/Screens/wallet_connect/wallet_luncher.dart';
+import 'wallet_data.dart';
+
 
 class AllWalletSheet extends StatefulWidget {
   const AllWalletSheet({super.key});
@@ -27,7 +29,6 @@ class _AllWalletSheetState extends State<AllWalletSheet> {
       ),
       child: Column(
         children: [
-          /// Header
           Row(
             children: [
               IconButton(
@@ -47,17 +48,31 @@ class _AllWalletSheetState extends State<AllWalletSheet> {
               ),
             ],
           ),
-
           const SizedBox(height: 12),
 
-          /// Wallet List
+          // show Wallet List 
           Expanded(
             child: ListView.builder(
               itemCount: wallets.length,
               itemBuilder: (_, i) {
                 final wallet = wallets[i];
+
                 return ListTile(
-                  leading: Image.asset(wallet.icon, height: 32),
+            leading: wallet.icon.endsWith(".svg")
+    ? SvgPicture.network(
+        wallet.icon,
+        height: 32,
+        placeholderBuilder: (context) =>
+            const Icon(Icons.account_balance_wallet),
+      )
+    : Image.network(
+        wallet.icon,
+        height: 32,
+        errorBuilder: (context, error, stackTrace) =>
+            const Icon(Icons.account_balance_wallet),
+      ),
+
+
                   title: Text(wallet.name),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () async {
@@ -71,7 +86,7 @@ class _AllWalletSheetState extends State<AllWalletSheet> {
 
           const SizedBox(height: 16),
 
-          /// Search at Bottom
+          // Search bar at button
           TextField(
             onChanged: (v) => setState(() => query = v),
             decoration: InputDecoration(

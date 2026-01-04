@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:soul_project/Presentations/Screens/wallet_connect/allwallet.dart';
 import 'package:soul_project/Presentations/Screens/wallet_connect/wallet_data.dart';
 import 'package:soul_project/Presentations/Screens/wallet_connect/wallet_luncher.dart';
@@ -21,7 +22,7 @@ class ConnectWalletSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          /// Header
+  
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -38,23 +39,36 @@ class ConnectWalletSheet extends StatelessWidget {
 
           const SizedBox(height: 8),
 
-          /// Wallet list
-          ...topWallets.map(
-            (wallet) => ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: Image.asset(wallet.icon, height: 32),
-              title: Text(wallet.name),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () async {
-                await openOrInstallWallet(wallet);
-                onSelect(wallet.name);
-              },
-            ),
+          // Wallet list
+         ...topWallets.map(
+  (wallet) => ListTile(
+    contentPadding: EdgeInsets.zero,
+    leading: wallet.icon.endsWith(".svg")
+        ? SvgPicture.network(
+            wallet.icon,
+            height: 32,
+            placeholderBuilder: (context) =>
+                const Icon(Icons.account_balance_wallet),
+          )
+        : Image.network(
+            wallet.icon,
+            height: 32,
+            errorBuilder: (context, error, stackTrace) =>
+                const Icon(Icons.account_balance_wallet),
           ),
+    title: Text(wallet.name),
+    trailing: const Icon(Icons.chevron_right),
+    onTap: () async {
+      await openOrInstallWallet(wallet);
+      onSelect(wallet.name);
+    },
+  ),
+),
+
 
           const SizedBox(height: 16),
 
-          /// All Wallet Button
+          /// shows all Wallet Button
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
