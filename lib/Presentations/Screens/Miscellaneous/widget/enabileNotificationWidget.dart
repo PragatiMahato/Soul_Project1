@@ -43,7 +43,7 @@ class EnableFeatureScreen extends StatelessWidget {
 
             Text(title, style: AppStyle.heading1),
             const SizedBox(height: 12),
-            Text(subtitle, style: AppStyle.smallText),
+            Text(subtitle, style: AppStyle.smallText, ),
 
             const SizedBox(height: 40),
 

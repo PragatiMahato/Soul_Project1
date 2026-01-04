@@ -12,7 +12,7 @@ class AppStyle {
     fontFamily: "Outfit",
     height: 1.214,
     letterSpacing: -1,
-    
+     decoration: TextDecoration.none
   );
 
   static const TextStyle heading2 = TextStyle(
@@ -46,7 +46,8 @@ class AppStyle {
     color: AppColors.bodyText,
     height: 1.3,
     letterSpacing: -0.5,
-    fontFamily: "Outfit"
+    fontFamily: "Outfit",
+    decoration: TextDecoration.none
     
   );
 

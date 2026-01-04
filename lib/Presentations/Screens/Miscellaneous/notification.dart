@@ -27,22 +27,22 @@ void initState() {
   @override
   Widget build(BuildContext context) {
     return EnableFeatureScreen(
-      title: "Stay in the know with instant notification",
-      subtitle:
-          "Get informed at the right time to make the most of your Learno account.",
+title: "Stay in the know with instant notification",
+subtitle: """Get informed at the right time 
+to make the most of your Learno account.""",
+
       mainImage: "assets/images/notification.png",
       buttonText: "Enable Notification",
-    // NotificationScreen.dart
 onEnableTap: () async {
   final granted = await NotificationPermissionService.request();
   if (!granted) {
     await NotificationPermissionService.openSettings();
   }
-  Navigator.pop(context); // return to flow
+  Navigator.pop(context); 
 },
 
 onMaybeLater: () {
-  Navigator.pop(context); // skip notifications
+  Navigator.pop(context); 
 }
 
 
