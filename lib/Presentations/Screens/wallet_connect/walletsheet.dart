@@ -59,9 +59,10 @@ class ConnectWalletSheet extends StatelessWidget {
     title: Text(wallet.name),
     trailing: const Icon(Icons.chevron_right),
     onTap: () async {
-      await openOrInstallWallet(wallet);
-      onSelect(wallet.name);
-    },
+await openOrInstallWallet(context, wallet);
+  onSelect(wallet.name);
+},
+
   ),
 ),
 

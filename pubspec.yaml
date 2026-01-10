@@ -44,6 +44,9 @@ dependencies:
   flutter_svg: ^2.2.3
   local_auth: ^3.0.0
   local_auth_android: ^2.0.4
+  fluttertoast: ^9.0.0
+  web3dart: ^2.7.1
+  provider: ^6.1.2
 
 
 dev_dependencies:

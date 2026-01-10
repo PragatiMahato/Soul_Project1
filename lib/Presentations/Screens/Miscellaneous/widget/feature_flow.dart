@@ -16,7 +16,7 @@ Future<void> runFeatureFlow(BuildContext context, String userId) async {
     );
   }
 
-  // 2️⃣ Face Unlock
+//   // 2️⃣ Face Unlock
 //   final faceUnlockEnabled = await FeaturePreference.isFaceUnlockEnabled(userId);
 //   if (!faceUnlockEnabled) {
 //    await Navigator.push(
@@ -27,13 +27,13 @@ Future<void> runFeatureFlow(BuildContext context, String userId) async {
 //   }
 
   // 3️⃣ Fingerprint
-//   final fingerprintEnabled = await FeaturePreference.isFingerprintEnabled(userId);
-//   if (!fingerprintEnabled) {
-//     await Navigator.push(
-//   context,
-//   MaterialPageRoute(builder: (_) => FingerprintScreen(userId: userId)),
-// );
-//   }
+  final fingerprintEnabled = await FeaturePreference.isFingerprintEnabled(userId);
+  if (!fingerprintEnabled) {
+    await Navigator.push(
+  context,
+  MaterialPageRoute(builder: (_) => FingerprintScreen(userId: userId)),
+);
+  }
 
   // 4️⃣ Homepage
   Navigator.pushReplacementNamed(context, "/homepage");

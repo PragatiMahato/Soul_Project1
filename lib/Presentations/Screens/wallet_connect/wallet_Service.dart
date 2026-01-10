@@ -24,6 +24,7 @@ class WalletConnectService {
       session = await connector.createSession(
         chainId: 1,
         onDisplayUri: (uri) async {
+           print("Open this URI in MetaMask: $uri");
           await launchUrl(
             Uri.parse(uri),
             mode: LaunchMode.externalApplication,

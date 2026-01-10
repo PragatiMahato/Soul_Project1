@@ -76,7 +76,7 @@ class _AllWalletSheetState extends State<AllWalletSheet> {
                   title: Text(wallet.name),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () async {
-                    await openOrInstallWallet(wallet);
+                    await openOrInstallWallet(context, wallet);
                     Navigator.pop(context);
                   },
                 );

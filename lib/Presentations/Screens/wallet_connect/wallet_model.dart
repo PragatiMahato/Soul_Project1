@@ -1,6 +1,6 @@
 class WalletInfo {
   final String name;
-  final String icon; // ✅ ADD
+  final String icon; 
   final String scheme;
   final String androidStore;
   final String iosStore;

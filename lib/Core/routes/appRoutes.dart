@@ -37,8 +37,8 @@ class AppRoutes {
       case emailScreen:
         return MaterialPageRoute(builder: (_) => const Emailscreen());
 
-      case verificationScreen:
-        return MaterialPageRoute(builder: (_) => const VerificationScreen());
+      // case verificationScreen:
+      //   return MaterialPageRoute(builder: (_) => const VerificationScreen());
 
       case createPasscode:
         return MaterialPageRoute(builder: (_) => const CreatePasscodeScreen());

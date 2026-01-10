@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:soul_project/Presentations/Screens/Miscellaneous/widget/enable.dart';
 import 'widget/enabileNotificationWidget.dart';
 import 'widget/notification_permission.dart';
 
@@ -44,8 +43,6 @@ onEnableTap: () async {
 onMaybeLater: () {
   Navigator.pop(context); 
 }
-
-
 
 
     );
