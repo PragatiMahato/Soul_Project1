@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:soul_project/Presentations/Screens/Miscellaneous/facelockscreen.dart';
 import 'package:soul_project/Presentations/Screens/Miscellaneous/fingerprintScreen.dart';
 import 'package:soul_project/Presentations/Screens/Miscellaneous/notification.dart';
 import 'package:soul_project/Presentations/Screens/Miscellaneous/widget/preference.dart';
@@ -7,7 +6,7 @@ import 'notification_permission.dart';
 
 
 Future<void> runFeatureFlow(BuildContext context, String userId) async {
-  // 1️⃣ Notifications
+  //  Notifications
   final notificationsEnabled = await NotificationPermissionService.isEnabled();
   if (!notificationsEnabled) {
     await Navigator.push(
@@ -16,7 +15,7 @@ Future<void> runFeatureFlow(BuildContext context, String userId) async {
     );
   }
 
-//   // 2️⃣ Face Unlock
+//   // 2️Face Unlock
 //   final faceUnlockEnabled = await FeaturePreference.isFaceUnlockEnabled(userId);
 //   if (!faceUnlockEnabled) {
 //    await Navigator.push(
@@ -26,7 +25,7 @@ Future<void> runFeatureFlow(BuildContext context, String userId) async {
 
 //   }
 
-  // 3️⃣ Fingerprint
+  // Fingerprint
   final fingerprintEnabled = await FeaturePreference.isFingerprintEnabled(userId);
   if (!fingerprintEnabled) {
     await Navigator.push(
@@ -35,6 +34,6 @@ Future<void> runFeatureFlow(BuildContext context, String userId) async {
 );
   }
 
-  // 4️⃣ Homepage
+  // Homepage
   Navigator.pushReplacementNamed(context, "/homepage");
 }

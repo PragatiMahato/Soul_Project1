@@ -17,7 +17,6 @@ class _FingerprintScreenState extends State<FingerprintScreen>
     with WidgetsBindingObserver {
   final LocalAuthentication _auth = LocalAuthentication();
   bool _isAuthenticating = false;
-  bool _authenticated = false;
   bool _biometricEnabled = true;
 
   @override
@@ -55,7 +54,6 @@ class _FingerprintScreenState extends State<FingerprintScreen>
 
       setState(() {
         _isAuthenticating = false;
-        _authenticated = authenticated;
       });
 
       if (!authenticated) {

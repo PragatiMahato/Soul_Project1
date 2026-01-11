@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:soul_project/Core/constants/appColors.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'wallet_model.dart';
 
@@ -12,21 +13,22 @@ Future<void> openOrInstallWallet(
   final Uri schemeUri = Uri.parse('${wallet.scheme}://');
 
   if (await canLaunchUrl(schemeUri)) {
-    // Wallet installed → open app
+    // Wallet installed 
     await launchUrl(
       schemeUri,
       mode: LaunchMode.externalApplication,
     );
   } else {
-    // Wallet not installed → show UI
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (_) => WalletActionSheet(wallet: wallet),
-    );
+    // Wallet not installed 
+showModalBottomSheet(
+  context: context,
+  backgroundColor: Colors.transparent,
+  isScrollControlled: true,
+  useSafeArea: true,
+  builder: (_) => WalletActionSheet(wallet: wallet),
+);
+
+
   }
 }
 
@@ -47,178 +49,140 @@ class WalletActionSheet extends StatefulWidget {
 
 class _WalletActionSheetState extends State<WalletActionSheet> {
   bool isAppSelected = true;
-  bool hasInternet = true;
-
-  void _copyLink() {
-    Clipboard.setData(
-      ClipboardData(text: widget.wallet.androidStore),
-    );
-    Navigator.pop(context);
-  }
-
-  Future<void> _installApp() async {
-    try {
-      await launchUrl(
-        Uri.parse(widget.wallet.androidStore),
-        mode: LaunchMode.externalApplication,
-      );
-    } catch (_) {
-      setState(() => hasInternet = false);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    
-    return Container(
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            /// HEADER
+    return Padding(
+      // 🔥 THIS CREATES SPACE ON ALL SIDES
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          width: double.infinity,
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.6,
+          ),
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(28), 
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+            
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.wallet.name,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600, 
-                  ),
+  children: [
+    IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () => Navigator.pop(context),
+    ),
+    const Spacer(),
+    Text(
+      widget.wallet.name,
+      style: const TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+    const Spacer(),
+    IconButton(
+      icon: const Icon(Icons.close),
+      onPressed: () => Navigator.pop(context),
+    ),
+  ],
+),
+
+
+              const SizedBox(height: 20),
+
+              // toogle button for app and browser
+              Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF1F1F1),
+                  borderRadius: BorderRadius.circular(24),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () => Navigator.pop(context),
+                child: Row(
+                  children: [
+                    _toggle("App", isAppSelected, () {
+                      setState(() => isAppSelected = true);
+                    }),
+                    _toggle("Browser", !isAppSelected, () {
+                      setState(() => isAppSelected = false);
+                    }),
+                  ],
                 ),
-              ],
-            ),
-      
-            const SizedBox(height: 12),
-      
-            /// TOGGLE
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFF2F2F2),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color.fromARGB(255, 221, 221, 221))
               ),
-              child: Row(
+
+              const SizedBox(height: 28),
+
+              // wallet icon
+              Container(
+                width: 72,
+                height: 72,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF4F4F4),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: widget.wallet.icon.endsWith('.svg')
+                    ? SvgPicture.network(widget.wallet.icon)
+                    : Image.network(widget.wallet.icon),
+              ),
+
+              const SizedBox(height: 14),
+
+              
+              Text(
+                isAppSelected
+                    ? "App not installed"
+                    : "Open and continue in browser",
+                style: const TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _toggleButton("App", isAppSelected, () {
-                    setState(() => isAppSelected = true);
-                  }),
-                  _toggleButton("Browser", !isAppSelected, () {
-                    setState(() => isAppSelected = false);
-                  }),
+                  _pillButton("Copy link", _copyLink),
+                  const SizedBox(width: 16),
+                  _pillButton(
+                    isAppSelected ? "Install app" : "Open browser",
+                    isAppSelected ? _installApp : _openInBrowser,
+                  ),
                 ],
               ),
-            ),
-      
-            const SizedBox(height: 16),
-      
-            /// WALLET IMAGE
-            Container(
-              height: 64,
-              width: 64,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: const Color(0xFFF4F4F4),
-              ),
-              child: widget.wallet.icon.endsWith('.svg')
-                  ? SvgPicture.network(widget.wallet.icon)
-                  : Image.network(
-                      widget.wallet.icon,
-                      errorBuilder: (_, __, ___) =>
-                          const Icon(Icons.account_balance_wallet),
-                    ),
-            ),
-      
-            const SizedBox(height: 8),
-      
-            /// CONTEXT TEXT
-            Text(
-              isAppSelected
-                  ? "App not installed"
-                  : "Open and continue in browser",
-              style: TextStyle(
-                fontSize: 13,
-                color: Colors.grey.shade600,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-      
-            const SizedBox(height: 20),
-      
-            /// ACTION BUTTONS
-            Row(
-              children: isAppSelected
-                  ? _appButtons()
-                  : _browserButtons(),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
- List<Widget> _appButtons() => [
-      Row(
-         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-           const SizedBox(width: 70),
-           _actionButton(
-        label: "Copy Link",
-        onTap: _copyLink,
-      ),
-      const SizedBox(width: 20),
-      _actionButton(
-        label: hasInternet ? "Install App" : "Try Again",
-        onTap: _installApp,
-      ),
-        ],
-      )
-    ];
 
-List<Widget> _browserButtons() => [
-     Row(
-       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-
-       const SizedBox(width: 70),
-         _actionButton(
-        label: "Copy Link",
-        onTap: _copyLink,
-      ),
-      const SizedBox(width: 20),
-      _actionButton(
-        label: "Open Browser",
-        onTap: () async {
-          Navigator.pop(context);
-          await launchUrl(
-            Uri.parse(widget.wallet.androidStore),
-            mode: LaunchMode.platformDefault,
-          );
-        },
-      ),
-      ],
-     )
-    ];
-
-  Widget _toggleButton(
-    String text,
-    bool active,
-    VoidCallback onTap,
-  ) {
+  Widget _toggle(String text, bool active, VoidCallback onTap) {
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
             color: active ? Colors.white : Colors.transparent,
             borderRadius: BorderRadius.circular(20),
+            boxShadow: active
+                ? [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 6,
+                    )
+                  ]
+                : [],
           ),
           child: Center(
             child: Text(
@@ -234,34 +198,97 @@ List<Widget> _browserButtons() => [
     );
   }
 
- Widget _actionButton({
-  // removed icon
-  required String label,
-  required VoidCallback onTap,
-}) {
-  return SizedBox(
-    width: 120,
-    height: 37,
-    child: GestureDetector(
+  Widget _pillButton(String text, VoidCallback onTap) {
+    return GestureDetector(
       onTap: onTap,
       child: Container(
-        
+        width: 130,
+        height: 38,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 237, 237, 237),
-          borderRadius: BorderRadius.circular(20),
+          color: const Color(0xFFF1F1F1),
+          borderRadius: BorderRadius.circular(22),
         ),
-        child: Center(
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-            ),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: const TextStyle(fontWeight: FontWeight.w500),
+        ),
+      ),
+    );
+  }
+
+void showCopiedTopBar() {
+  final overlay = Overlay.of(context);
+  if (overlay == null) return;
+
+  final entry = OverlayEntry(
+    builder: (_) => Positioned(
+      top: MediaQuery.of(context).padding.top,
+      left: 0,
+      right: 0,
+      child: Material(
+        color: const Color(0xFFD6FFF2),
+        child: Container(
+          height: 56,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: [
+              Container(
+                width: 20,
+                height: 20,
+                decoration: const BoxDecoration(
+                  color: Color(0xFF0E7857),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.check,
+                  size: 14,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(width: 12),
+              const Text(
+                "Link copied",
+                style: TextStyle(
+                  color: Color(0xFF0E7857),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15,
+                ),
+              ),
+            ],
           ),
         ),
       ),
     ),
   );
 
+  overlay.insert(entry);
+
+  Future.delayed(const Duration(seconds: 2), () {
+    entry.remove();
+  });
+}
+
+  void _copyLink() {
+    Clipboard.setData(
+      ClipboardData(text: widget.wallet.androidStore),
+    );
+    Navigator.pop(context);
+    showCopiedTopBar();
+  }
+
+  Future<void> _installApp() async {
+    await launchUrl(
+      Uri.parse(widget.wallet.androidStore),
+      mode: LaunchMode.externalApplication,
+    );
+  }
+
+  Future<void> _openInBrowser() async {
+    Navigator.pop(context);
+    await launchUrl(
+      Uri.parse(widget.wallet.androidStore),
+      mode: LaunchMode.externalApplication,
+    );
   }
 }

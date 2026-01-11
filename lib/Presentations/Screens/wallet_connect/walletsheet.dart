@@ -91,7 +91,7 @@ await openOrInstallWallet(context, wallet);
                 ),
               ),
               child: const Text(
-                "All Wallet (15+)",
+                "All Wallet (11+)",
                 style: TextStyle(color: Colors.black),
               ),
             ),
@@ -103,13 +103,4 @@ await openOrInstallWallet(context, wallet);
 
 
 
-  Widget _walletTile(wallet, {required VoidCallback onTap}) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Image.asset(wallet.icon, height: 32),
-      title: Text(wallet.name),
-      trailing: const Icon(Icons.chevron_right),
-      onTap: onTap,
-    );
-  }
 }

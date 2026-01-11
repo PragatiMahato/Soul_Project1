@@ -13,7 +13,7 @@ import 'package:soul_project/Presentations/Screens/Home/settingScreen.dart';
 import 'package:soul_project/Presentations/Screens/Miscellaneous/notification.dart';
 import 'package:soul_project/Presentations/Screens/Passcode/createPasscode.dart';
 import 'package:soul_project/Presentations/Screens/SignUp/emailScreen.dart';
-import 'package:soul_project/Presentations/Screens/SignUp/verificationScreen.dart';
+
 import 'package:soul_project/services/authService.dart';
 
 void main() async {
@@ -51,7 +51,6 @@ void initState() {
 }
 
 
-final AuthService _authService = AuthService();
 
  User? _currentUser; 
 

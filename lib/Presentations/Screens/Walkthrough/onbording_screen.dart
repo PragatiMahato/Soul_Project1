@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:soul_project/Core/constants/appColors.dart';
 import 'package:soul_project/Core/constants/appStyles.dart';
-import 'package:soul_project/Presentations/Screens/Home/homePage.dart';
+
 import 'package:soul_project/Presentations/Screens/Miscellaneous/widget/feature_flow.dart';
 
 import 'package:soul_project/Presentations/widgets/customButton.dart';
 import 'package:soul_project/services/authService.dart';
 
-import '../Miscellaneous/widget/notification_permission.dart';
+
 
 class OnoardingScreen extends StatefulWidget {
   const OnoardingScreen({super.key});

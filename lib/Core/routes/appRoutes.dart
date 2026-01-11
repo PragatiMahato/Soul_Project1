@@ -3,11 +3,9 @@ import 'package:soul_project/Presentations/Screens/ForgetPin/forgetPasscodeScree
 import 'package:soul_project/Presentations/Screens/Home/homePage.dart';
 import 'package:soul_project/Presentations/Screens/Home/qr_code.dart';
 import 'package:soul_project/Presentations/Screens/Home/settingScreen.dart';
-
-import 'package:soul_project/Presentations/Screens/Miscellaneous/notification.dart';
 import 'package:soul_project/Presentations/Screens/Passcode/createPasscode.dart';
 import 'package:soul_project/Presentations/Screens/SignUp/emailScreen.dart';
-import 'package:soul_project/Presentations/Screens/SignUp/verificationScreen.dart';
+
 import 'package:soul_project/Presentations/Screens/Walkthrough/onbording_screen.dart';
 import 'package:soul_project/Presentations/Screens/Walkthrough/splash_screen.dart';
 

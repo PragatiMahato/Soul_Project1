@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:soul_project/Presentations/Screens/wallet_connect/wallet_luncher.dart';
 import 'wallet_data.dart';
 
-
 class AllWalletSheet extends StatefulWidget {
   const AllWalletSheet({super.key});
 
@@ -29,17 +28,21 @@ class _AllWalletSheetState extends State<AllWalletSheet> {
       ),
       child: Column(
         children: [
+          // ---------- HEADER ----------
           Row(
             children: [
               IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () => Navigator.pop(context),
               ),
-              const Expanded(
+              Expanded(
                 child: Text(
-                  "All Wallet (15+)",
+                  "All Wallet (${wallets.length})",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               IconButton(
@@ -48,45 +51,45 @@ class _AllWalletSheetState extends State<AllWalletSheet> {
               ),
             ],
           ),
+
           const SizedBox(height: 12),
 
-          // show Wallet List 
+          // ---------- LIST / EMPTY STATE ----------
           Expanded(
-            child: ListView.builder(
-              itemCount: wallets.length,
-              itemBuilder: (_, i) {
-                final wallet = wallets[i];
+            child: wallets.isEmpty
+                ? _noResultView()
+                : ListView.builder(
+                    itemCount: wallets.length,
+                    itemBuilder: (_, i) {
+                      final wallet = wallets[i];
 
-                return ListTile(
-            leading: wallet.icon.endsWith(".svg")
-    ? SvgPicture.network(
-        wallet.icon,
-        height: 32,
-        placeholderBuilder: (context) =>
-            const Icon(Icons.account_balance_wallet),
-      )
-    : Image.network(
-        wallet.icon,
-        height: 32,
-        errorBuilder: (context, error, stackTrace) =>
-            const Icon(Icons.account_balance_wallet),
-      ),
-
-
-                  title: Text(wallet.name),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () async {
-                    await openOrInstallWallet(context, wallet);
-                    Navigator.pop(context);
-                  },
-                );
-              },
-            ),
+                      return ListTile(
+                        leading: wallet.icon.endsWith(".svg")
+                            ? SvgPicture.network(
+                                wallet.icon,
+                                height: 32,
+                                placeholderBuilder: (_) =>
+                                    const Icon(Icons.account_balance_wallet),
+                              )
+                            : Image.network(
+                                wallet.icon,
+                                height: 32,
+                                errorBuilder: (_, __, ___) =>
+                                    const Icon(Icons.account_balance_wallet),
+                              ),
+                        title: Text(wallet.name),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () async {
+                          await openOrInstallWallet(context, wallet);
+                        },
+                      );
+                    },
+                  ),
           ),
 
           const SizedBox(height: 16),
 
-          // Search bar at button
+          // ---------- SEARCH BAR ----------
           TextField(
             onChanged: (v) => setState(() => query = v),
             decoration: InputDecoration(
@@ -102,6 +105,37 @@ class _AllWalletSheetState extends State<AllWalletSheet> {
           ),
         ],
       ),
+    );
+  }
+
+  // ---------- EMPTY STATE ----------
+  Widget _noResultView() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // 🔍 Search illustration (same feel as image)
+        Container(
+          width: 140,
+          height: 140,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF4F4F4),
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(
+            Icons.search,
+            size: 72,
+            color: Colors.black54,
+          ),
+        ),
+        const SizedBox(height: 24),
+        Text(
+          'No result found for "$query"',
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:soul_project/Core/constants/appStyles.dart';
 import 'package:soul_project/Presentations/Screens/Home/weidget/actionButton.dart';
-import 'package:soul_project/services/authService.dart' show AuthService;
 
 class MyQrCodeScreen extends StatefulWidget {
   const MyQrCodeScreen({super.key});
@@ -13,7 +12,6 @@ class MyQrCodeScreen extends StatefulWidget {
 }
 
 class _MyQrCodeScreenState extends State<MyQrCodeScreen> {
-  final AuthService _authService = AuthService();
 
     User? _currentUser; 
 
